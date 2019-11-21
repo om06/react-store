@@ -1,26 +1,83 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      products: []
+    };
+  }
+
+  componentDidMount() {
+    this.populateList()
+  }
+
+  populateList(){
+    axios.get('/api/store')
+    .then(res => {
+      this.setState({ products: res.data });
+      console.log(this.state.products);
+    });
+  }
+  deleteProduct(e){
+
+    console.log()
+    axios.delete('/api/store/'+e.target.id)
+    .then(res => {
+      this.populateList()
+    });
+  }
+
+  render() {
+    return (
+      <div class="container">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              Products available
+            </h3>
+          </div>
+          <div class="panel-body">
+            <h4><Link to="/create"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Product</Link></h4>
+            <table class="table table-stripe">
+              <thead>
+                <tr>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Quantity</th>
+                  <th>Description</th>
+                  <th>Action</th>
+                  
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.products.map(product =>
+                  <tr>
+                    <td><img style={{width:'100px'}} src={"/"+product.file}/></td>
+                    <td>{product.name}</td>
+                    <td>{product.quantity}</td>
+                    <td>{product.description}</td>
+                    <td><button 
+                        className="btn btn-danger" 
+                        id={product._id}
+                        onClick={e => this.deleteProduct(e)}
+                        >
+                        Delete
+                        </button>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
