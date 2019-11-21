@@ -42,7 +42,13 @@ class App extends Component {
             </h3>
           </div>
           <div class="panel-body">
-            <h4><Link to="/create"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add Product</Link></h4>
+            <h4>
+              <Link to="/create">
+                <button className="btn btn-primary">
+                  Add Product
+                </button>
+              </Link>
+            </h4>
             <table class="table table-stripe">
               <thead>
                 <tr>
@@ -57,7 +63,7 @@ class App extends Component {
               <tbody>
                 {this.state.products.map(product =>
                   <tr>
-                    <td><img style={{width:'100px'}} src={"/"+product.file}/></td>
+                    <td><img style={{width:'50px'}} src={"/"+product.file}/></td>
                     <td>{product.name}</td>
                     <td>{product.quantity}</td>
                     <td>{product.description}</td>

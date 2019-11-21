@@ -57,7 +57,13 @@ class Create extends Component {
             </h3>
           </div>
           <div class="panel-body">
-            <h4><Link to="/"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> Product List</Link></h4>
+            <h4>
+              <Link to="/">
+                <button className="btn btn-primary">
+                  Product List
+                </button>
+              </Link>
+            </h4>
             <form onSubmit={this.onSubmit}>
               <div class="form-group">
                 <label for="isbn">NAME:</label>
@@ -72,7 +78,7 @@ class Create extends Component {
                 <textArea class="form-control" name="description" onChange={this.onChange} placeholder="Description" cols="80" rows="3">{description}</textArea>
               </div>
               <input onChange={e => this.onInputChange(e)} type="file"/>
-              <button type="submit" class="btn btn-default">Submit</button>
+              <button type="submit" class="btn btn-success">Submit</button>
             </form>
           </div>
         </div>
